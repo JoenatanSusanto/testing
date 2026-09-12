@@ -42,8 +42,15 @@
         </button>
     </header>
 
-    <!-- MOBILE MENU -->
+    <!-- MOBILE MENU OVERLAY -->
     <div class="mobile-menu-overlay" id="mobileMenu">
+        <button class="menu-close" id="menuClose" aria-label="Tutup Menu">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                <line x1="6" y1="6" x2="18" y2="18"/>
+                <line x1="18" y1="6" x2="6" y2="18"/>
+            </svg>
+        </button>
+
         <div class="mobile-menu-content">
             <a href="#" class="mobile-link active">BERANDA</a>
             <a href="#" class="mobile-link">PRODUK</a>
@@ -90,45 +97,22 @@
             
             <!-- Lingkaran Utama (Menu Slide Container) -->
             <div class="shape-circle">
-                
-                <!-- Menu 1 (Aktif) — Placeholder untuk gambar -->
-                <div class="menu-slide active" data-menu="0">
-                    <!-- Nanti: <img src="menu1.jpg" alt="Menu 1"> -->
-                </div>
-
-                <!-- Menu 2 -->
-                <div class="menu-slide" data-menu="1">
-                    <!-- Nanti: <img src="menu2.jpg" alt="Menu 2"> -->
-                </div>
-
-                <!-- Menu 3 -->
-                <div class="menu-slide" data-menu="2">
-                    <!-- Nanti: <img src="menu3.jpg" alt="Menu 3"> -->
-                </div>
-
+                <div class="menu-slide active" data-menu="0"></div>
+                <div class="menu-slide" data-menu="1"></div>
+                <div class="menu-slide" data-menu="2"></div>
             </div>
 
-            <!-- DAFTAR MENU (3 Thumbnail Vertikal) -->
+            <!-- DAFTAR MENU -->
             <div class="menu-list">
-                
                 <div class="menu-item active" data-index="0">
-                    <div class="menu-thumb">
-                        <span class="thumb-label">menu1</span>
-                    </div>
+                    <div class="menu-thumb"><span class="thumb-label">menu1</span></div>
                 </div>
-
                 <div class="menu-item" data-index="1">
-                    <div class="menu-thumb">
-                        <span class="thumb-label">menu2</span>
-                    </div>
+                    <div class="menu-thumb"><span class="thumb-label">menu2</span></div>
                 </div>
-
                 <div class="menu-item" data-index="2">
-                    <div class="menu-thumb">
-                        <span class="thumb-label">menu3</span>
-                    </div>
+                    <div class="menu-thumb"><span class="thumb-label">menu3</span></div>
                 </div>
-
             </div>
 
             <!-- FOOTER INFO MOBILE -->
@@ -145,10 +129,10 @@
         <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
             <path class="wave-path wave-back" 
                   d="M0,80 Q45,40 90,80 T180,80 T270,80 T360,80 T450,80 T540,80 T630,80 T720,80 T810,80 T900,80 T990,80 T1080,80 T1170,80 T1260,80 T1350,80 T1440,80 L1440,120 L0,120 Z" 
-                  fill="#C04228" opacity="0.5"></path>
+                  fill="#E53D3D" opacity="0.5"></path>
             <path class="wave-path wave-front" 
                   d="M0,80 Q45,40 90,80 T180,80 T270,80 T360,80 T450,80 T540,80 T630,80 T720,80 T810,80 T900,80 T990,80 T1080,80 T1170,80 T1260,80 T1350,80 T1440,80 L1440,120 L0,120 Z" 
-                  fill="#C04228"></path>
+                  fill="#E53D3D"></path>
         </svg>
     </div>
 
