@@ -16,15 +16,15 @@
     <!-- NAVBAR -->
     <header class="navbar-container">
         <div class="nav-left-group">
-            <div class="logo-circle">
+            <a href="#hero" class="logo-circle">
                 <img src="https://via.placeholder.com/100" alt="Logo" class="logo-img">
-            </div>
+            </a>
             <nav class="nav-box">
                 <div class="nav-links-desktop">
-                    <a href="#" class="nav-link active">BERANDA</a>
-                    <a href="#" class="nav-link">PRODUK</a>
-                    <a href="#" class="nav-link">TENTANG</a>
-                    <a href="#" class="nav-link">TESTIMONI</a>
+                    <a href="#hero" class="nav-link active">BERANDA</a>
+                    <a href="#produk" class="nav-link">PRODUK</a>
+                    <a href="#tentang" class="nav-link">TENTANG</a>
+                    <a href="#testimoni" class="nav-link">TESTIMONI</a>
                 </div>
                 <span class="nav-logo-text">TEST LOGO</span>
             </nav>
@@ -52,10 +52,10 @@
         </button>
 
         <div class="mobile-menu-content">
-            <a href="#" class="mobile-link active">BERANDA</a>
-            <a href="#" class="mobile-link">PRODUK</a>
-            <a href="#" class="mobile-link">TENTANG</a>
-            <a href="#" class="mobile-link">TESTIMONI</a>
+            <a href="#hero" class="mobile-link active">BERANDA</a>
+            <a href="#produk" class="mobile-link">PRODUK</a>
+            <a href="#tentang" class="mobile-link">TENTANG</a>
+            <a href="#testimoni" class="mobile-link">TESTIMONI</a>
             <a href="#" class="btn-whatsapp-mobile">
                 WHATSAPP
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA Icon" class="wa-icon">
@@ -64,7 +64,7 @@
     </div>
 
     <!-- HERO SECTION -->
-    <section class="hero-section">
+    <section class="hero-section" id="hero">
         
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
@@ -165,7 +165,7 @@
     </div>
 
     <!-- SECTION PRODUK -->
-    <section class="section-product" id="sectionRed">
+    <section class="section-product" id="produk">
         
         <div class="blob blob-4"></div>
         <div class="blob blob-5"></div>
@@ -309,18 +309,25 @@
     <!-- =========================================
          SECTION ABOUT
          ========================================= -->
-    <section class="section-about" id="sectionAbout">
+    <section class="section-about" id="tentang">
         
         <!-- BAGIAN 1: MENGAPA HARUS KITA -->
         <div class="about-why">
 
             <!-- FRAME KOSONG -->
             <div class="about-why-frame">
-                
-                <!-- WAVE DI ATAS -->
+
+                <!-- BLOB DECORATION -->
+                <div class="blob blob-6"></div>
+                <div class="blob blob-7"></div>
+
+                <!-- WAVE DI ATAS (PRODUK → ABOUT) -->
                 <div class="about-why-wave">
                     <svg class="about-wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
-                        <path class="about-wave-path" 
+                        <path class="about-wave-path about-wave-back" 
+                              d="M0,80 Q45,40 90,80 T180,80 T270,80 T360,80 T450,80 T540,80 T630,80 T720,80 T810,80 T900,80 T990,80 T1080,80 T1170,80 T1260,80 T1350,80 T1440,80 L1440,120 L0,120 Z" 
+                              fill="#E53D3D" opacity="0.5"></path>
+                        <path class="about-wave-path about-wave-front" 
                               d="M0,80 Q45,40 90,80 T180,80 T270,80 T360,80 T450,80 T540,80 T630,80 T720,80 T810,80 T900,80 T990,80 T1080,80 T1170,80 T1260,80 T1350,80 T1440,80 L1440,120 L0,120 Z" 
                               fill="#E53D3D"></path>
                     </svg>
@@ -378,7 +385,11 @@
 
         <!-- BAGIAN 2: TENTANG KAMI -->
         <div class="about-us">
-            
+
+            <!-- BLOB DECORATION -->
+            <div class="blob blob-8"></div>
+            <div class="blob blob-9"></div>
+
             <div class="about-us-gallery">
                 <div class="gallery-item"></div>
                 <div class="gallery-item"></div>
@@ -405,6 +416,101 @@
         </div>
 
     </section>
+
+    <!-- =========================================
+         WAVE PEMISAH ABOUT — TESTIMONI
+         ========================================= -->
+    <div class="wave-divider-about-testi">
+        <svg class="wave-about-testi" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path class="wave-about-testi-path wave-about-testi-back" 
+                  d="M0,80 Q45,40 90,80 T180,80 T270,80 T360,80 T450,80 T540,80 T630,80 T720,80 T810,80 T900,80 T990,80 T1080,80 T1170,80 T1260,80 T1350,80 T1440,80 L1440,120 L0,120 Z" 
+                  fill="#E53D3D" opacity="0.5"></path>
+            <path class="wave-about-testi-path wave-about-testi-front" 
+                  d="M0,80 Q45,40 90,80 T180,80 T270,80 T360,80 T450,80 T540,80 T630,80 T720,80 T810,80 T900,80 T990,80 T1080,80 T1170,80 T1260,80 T1350,80 T1440,80 L1440,120 L0,120 Z" 
+                  fill="#E53D3D"></path>
+        </svg>
+    </div>
+
+    <!-- =========================================
+         SECTION TESTIMONI
+         ========================================= -->
+    <section class="section-testimoni" id="testimoni">
+        
+        <div class="blob blob-10"></div>
+        <div class="blob blob-11"></div>
+
+        <div class="testimoni-header">
+            <div class="testimoni-badge">Kepuasan Customer</div>
+            <h2 class="testimoni-title">Cerita Manis dari Pelanggan Kami</h2>
+            <p class="testimoni-desc">
+                Testimoni asli yang telah menjadi bagian dari perjalanan BeFond Cake sejak 2016.
+            </p>
+        </div>
+
+        <div class="testimoni-list">
+            
+            <div class="testimoni-card" data-src="https://via.placeholder.com/800x1000/CCCCCC/333333?text=Testimoni+1">
+                <div class="testimoni-image"></div>
+            </div>
+            <div class="testimoni-card" data-src="https://via.placeholder.com/800x1000/CCCCCC/333333?text=Testimoni+2">
+                <div class="testimoni-image"></div>
+            </div>
+            <div class="testimoni-card" data-src="https://via.placeholder.com/800x1000/CCCCCC/333333?text=Testimoni+3">
+                <div class="testimoni-image"></div>
+            </div>
+            <div class="testimoni-card" data-src="https://via.placeholder.com/800x1000/CCCCCC/333333?text=Testimoni+4">
+                <div class="testimoni-image"></div>
+            </div>
+            <div class="testimoni-card" data-src="https://via.placeholder.com/800x1000/CCCCCC/333333?text=Testimoni+5">
+                <div class="testimoni-image"></div>
+            </div>
+            <div class="testimoni-card" data-src="https://via.placeholder.com/800x1000/CCCCCC/333333?text=Testimoni+6">
+                <div class="testimoni-image"></div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================================
+         SECTION QUESTION (BARU)
+         ========================================= -->
+    <section class="section-question" id="question">
+
+        <!-- BLOB DECORATION (SAMA SEPERTI HERO SECTION) -->
+        <div class="blob blob-12"></div>
+        <div class="blob blob-13"></div>
+        <div class="blob blob-14"></div>
+
+        <div class="question-content">
+            <div class="question-badge">Pesan Untuk Sekarang</div>
+
+            <h2 class="question-title">
+                Sudah Menemukan Menu yang Sesuai?
+            </h2>
+
+            <p class="question-desc">
+                Hubungi kami untuk mengecek stok, promo, jadwal pengiriman, atau
+                kebutuhan pesanan dalam jumlah banyak.
+            </p>
+
+            <a href="#" class="btn-question">HUBUNGI SEKARANG</a>
+        </div>
+
+    </section>
+
+    <!-- =========================================
+         LIGHTBOX (Perbesar Gambar Testimoni)
+         ========================================= -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Tutup">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                <line x1="6" y1="6" x2="18" y2="18"/>
+                <line x1="18" y1="6" x2="6" y2="18"/>
+            </svg>
+        </button>
+        <img src="" alt="Testimoni" class="lightbox-img" id="lightboxImg">
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -2,31 +2,131 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log('✅ Script loaded');
 
-    // NAVBAR + DETEKSI SECTION MERAH
+    // =========================================
+    // 1. NAVBAR BERFUNGSI (Smooth Scroll + Active State)
+    // =========================================
     const navbar = document.querySelector('.navbar-container');
-    const sectionRed = document.getElementById('sectionRed');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    const sections = document.querySelectorAll('section[id]');
 
-    if (sectionRed) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navbar.classList.add('in-red-section');
-                } else {
-                    navbar.classList.remove('in-red-section');
-                }
+    // Fungsi: Smooth scroll ke section
+    function scrollToSection(targetId) {
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+            const navHeight = navbar.offsetHeight + 40;
+            const targetPosition = targetSection.offsetTop - navHeight;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '-80px 0px -50% 0px'
-        });
-        observer.observe(sectionRed);
+        }
     }
 
-    // TOGGLE MOBILE MENU
+    // Event: Klik nav-link desktop
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                scrollToSection(targetId);
+                // Update active state
+                navLinks.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+
+    // Event: Klik mobile-link
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                closeMenu();
+                setTimeout(() => {
+                    scrollToSection(targetId);
+                    mobileLinks.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                }, 400);
+            }
+        });
+    });
+
+    // Event: Klik logo → scroll ke hero
+    const logoCircle = document.querySelector('.logo-circle');
+    if (logoCircle) {
+        logoCircle.addEventListener('click', function(e) {
+            e.preventDefault();
+            scrollToSection('#hero');
+        });
+    }
+
+    // =========================================
+    // 2. NAVBAR ACTIVE STATE SAAT SCROLL
+    // =========================================
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+
+        // =========================================
+        // 3. NAVBAR BERUBAH WARNA DI SECTION MERAH
+        // (Produk & Testimoni)
+        // =========================================
+        const sectionProduk = document.getElementById('produk');
+        const sectionTestimoni = document.getElementById('testimoni');
+
+        let inRedSection = false;
+
+        if (sectionProduk) {
+            const produkTop = sectionProduk.offsetTop - 150;
+            const produkBottom = produkTop + sectionProduk.clientHeight;
+            if (window.scrollY >= produkTop && window.scrollY <= produkBottom) {
+                inRedSection = true;
+            }
+        }
+
+        if (sectionTestimoni) {
+            const testiTop = sectionTestimoni.offsetTop - 150;
+            const testiBottom = testiTop + sectionTestimoni.clientHeight;
+            if (window.scrollY >= testiTop && window.scrollY <= testiBottom) {
+                inRedSection = true;
+            }
+        }
+
+        if (inRedSection) {
+            navbar.classList.add('in-red-section');
+        } else {
+            navbar.classList.remove('in-red-section');
+        }
+    });
+
+    // =========================================
+    // 4. TOGGLE MOBILE MENU
+    // =========================================
     const menuToggle = document.getElementById('menuToggle');
     const mobileMenu = document.getElementById('mobileMenu');
     const menuClose = document.getElementById('menuClose');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
 
     function openMenu() {
         menuToggle.classList.add('active');
@@ -47,25 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (menuClose) menuClose.addEventListener('click', closeMenu);
 
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileLinks.forEach(item => item.classList.remove('active'));
-            link.classList.add('active');
-            closeMenu();
-        });
-    });
-
-    // NAVIGASI DESKTOP
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            navLinks.forEach(item => item.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
-    // MENU SLIDE SYSTEM
+    // =========================================
+    // 5. MENU SLIDE SYSTEM (Hero)
+    // =========================================
     const menuSlides = document.querySelectorAll('.menu-slide');
     const menuItems = document.querySelectorAll('.menu-item');
     const menuLabels = document.querySelectorAll('.menu-label');
@@ -211,7 +295,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRatingName();
     resetTimer();
 
-    // 3D TILT EFFECT (Desktop only: ≥ 1120px)
+    // =========================================
+    // 6. 3D TILT EFFECT (Desktop only: ≥ 1120px)
+    // =========================================
     const productCards = document.querySelectorAll('.product-card');
     
     productCards.forEach(card => {
@@ -239,6 +325,53 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
             card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.15)';
         });
+    });
+
+    // =========================================
+    // 7. LIGHTBOX TESTIMONI (Perbesar Gambar)
+    // =========================================
+    const testimoniCards = document.querySelectorAll('.testimoni-card');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    testimoniCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const src = card.getAttribute('data-src');
+            if (src) {
+                lightboxImg.src = src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        setTimeout(() => {
+            lightboxImg.src = '';
+        }, 400);
+    }
+
+    if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+    }
+
+    // Klik area luar gambar untuk close
+    if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+    }
+
+    // ESC key untuk close lightbox
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
     });
 
 });

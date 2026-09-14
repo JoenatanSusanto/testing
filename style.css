@@ -46,6 +46,8 @@ body {
     top: 0;
     flex-shrink: 0;
     transition: all 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .navbar-container.in-red-section .logo-circle {
@@ -1004,7 +1006,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 60px 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     position: relative;
     flex-shrink: 0;
 }
@@ -1142,10 +1143,338 @@ body {
     transform: scale(1.03);
 }
 
+/* =========================================
+   WAVE PEMISAH ABOUT — TESTIMONI
+   ========================================= */
+.wave-divider-about-testi {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    margin-top: -1px;
+}
+
+.wave-about-testi {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 120px;
+}
+
+.wave-about-testi-path {
+    transform-origin: center;
+}
+
+.wave-about-testi-back {
+    animation: waveAboutTestiBack 8s linear infinite;
+}
+
+.wave-about-testi-front {
+    animation: waveAboutTestiFront 6s linear infinite;
+}
+
+@keyframes waveAboutTestiBack {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes waveAboutTestiFront {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
+
+/* =========================================
+   SECTION TESTIMONI
+   ========================================= */
+.section-testimoni {
+    width: 100%;
+    background-color: #E53D3D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 100px 100px 120px 100px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.testimoni-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 80px;
+}
+
+.testimoni-badge {
+    font-family: 'Jockey One', sans-serif;
+    font-size: 32px;
+    color: #FFFFFF;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    padding: 6px 30px;
+    display: inline-block;
+}
+
+.testimoni-title {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 48px;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    margin-bottom: 3px;
+    max-width: 900px;
+}
+
+.testimoni-desc {
+    font-family: 'Jockey One', sans-serif;
+    font-size: 20px;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.testimoni-list {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+}
+
+.testimoni-card {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-color: #CCCCCC;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.testimoni-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.testimoni-card::after {
+    content: '🔍';
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(229, 61, 61, 0.9);
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.testimoni-card:hover::after {
+    opacity: 1;
+}
+
+.testimoni-image {
+    width: 100%;
+    height: 100%;
+    background-color: #CCCCCC;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* =========================================
+   SECTION QUESTION (BARU)
+   ========================================= */
+.section-question {
+    position: relative;
+    width: 100%;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 100px;
+    overflow: hidden;
+    z-index: 2;
+}
+
+/* ===== KONTEN SECTION QUESTION ===== */
+.question-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+    max-width: 700px;
+}
+
+.question-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 32px;
+    border: 2px solid #E53D3D;
+    border-radius: 50px;
+    font-family: 'Jockey One', sans-serif;
+    font-size: 22px;
+    color: #E53D3D;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    background-color: #FFFFFF;
+}
+
+.question-title {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 52px;
+    color: #E53D3D;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.question-desc {
+    font-family: 'Jockey One', sans-serif;
+    font-size: 20px;
+    color: #888888;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 35px;
+    max-width: 600px;
+}
+
+.btn-question {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 50px;
+    background-color: #E53D3D;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 26px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(229, 61, 61, 0.3);
+}
+
+.btn-question:hover {
+    background-color: #C42F2F;
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(229, 61, 61, 0.4);
+}
+
+/* ===== BLOB SECTION QUESTION (SAMA SEPERTI HERO) ===== */
+.blob-12 {
+    width: 180px; height: 180px; top: 8%; right: 5%;
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    background-color: #FF7D62; opacity: 0.35;
+}
+.blob-13 {
+    width: 220px; height: 220px; bottom: 10%; left: 2%;
+    border-radius: 40% 60% 70% 30% / 40% 50% 50% 60%;
+    background-color: #E53D3D; opacity: 0.15;
+    animation-delay: -2s, -3s, -5s;
+}
+.blob-14 {
+    width: 140px; height: 140px; top: 40%; left: 40%;
+    border-radius: 50% 50% 40% 60% / 50% 40% 60% 50%;
+    background-color: #FFAE00; opacity: 0.25;
+    animation-delay: -4s, -6s, -10s;
+}
+
+/* =========================================
+   LIGHTBOX
+   ========================================= */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.8);
+    transition: transform 0.4s ease;
+}
+
+.lightbox.active .lightbox-img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    background-color: #E53D3D;
+    border: none;
+    border-radius: 50%;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    z-index: 10000;
+}
+
+.lightbox-close:hover {
+    background-color: #C42F2F;
+    transform: scale(1.1) rotate(90deg);
+}
+
 /* BLOB DECORATION */
 .blob {
     position: absolute;
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
     animation: blobFloat 8s ease-in-out infinite,
                blobMorph 12s ease-in-out infinite,
@@ -1180,6 +1509,42 @@ body {
     border-radius: 70% 30% 40% 60% / 60% 70% 30% 40%;
     background-color: #FF7D62; opacity: 0.2;
     animation-delay: -3s, -5s, -8s;
+}
+.blob-6 {
+    width: 200px; height: 200px; top: 5%; left: -60px;
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    background-color: #FF7D62; opacity: 0.3;
+    animation-delay: -1s, -2s, -3s;
+}
+.blob-7 {
+    width: 180px; height: 180px; top: 40%; right: -50px;
+    border-radius: 40% 60% 70% 30% / 40% 50% 50% 60%;
+    background-color: #FFAE00; opacity: 0.2;
+    animation-delay: -3s, -5s, -7s;
+}
+.blob-8 {
+    width: 220px; height: 220px; bottom: 15%; left: -60px;
+    border-radius: 50% 50% 40% 60% / 50% 40% 60% 50%;
+    background-color: #FF7D62; opacity: 0.25;
+    animation-delay: -2s, -4s, -6s;
+}
+.blob-9 {
+    width: 160px; height: 160px; top: 20%; right: -40px;
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    background-color: #E53D3D; opacity: 0.15;
+    animation-delay: -5s, -7s, -9s;
+}
+.blob-10 {
+    width: 220px; height: 220px; top: 10%; left: -60px;
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    background-color: #FFFFFF; opacity: 0.1;
+    animation-delay: -1s, -3s, -5s;
+}
+.blob-11 {
+    width: 200px; height: 200px; bottom: 10%; right: -60px;
+    border-radius: 40% 60% 70% 30% / 40% 50% 50% 60%;
+    background-color: #FF7D62; opacity: 0.2;
+    animation-delay: -4s, -6s, -8s;
 }
 
 @keyframes blobFloat {
@@ -1258,6 +1623,24 @@ body {
     .about-us-title { font-size: 52px; }
     .about-us-desc { font-size: 20px; }
     .btn-about { font-size: 24px; padding: 22px 45px; }
+
+    .section-testimoni { padding: 120px 120px 140px 120px; }
+    .testimoni-badge { font-size: 38px; margin-bottom: 22px; }
+    .testimoni-title { font-size: 60px; max-width: 1100px; margin-bottom: 3px; }
+    .testimoni-desc { font-size: 24px; max-width: 900px; }
+    .testimoni-list { max-width: 1400px; gap: 40px; }
+    .lightbox-close { width: 65px; height: 65px; }
+
+    /* Section Question */
+    .section-question { padding: 160px 120px; }
+    .question-badge { font-size: 26px; padding: 10px 40px; }
+    .question-title { font-size: 64px; }
+    .question-desc { font-size: 24px; max-width: 750px; }
+    .btn-question { font-size: 32px; padding: 22px 60px; }
+
+    .blob-12 { width: 220px; height: 220px; }
+    .blob-13 { width: 260px; height: 260px; }
+    .blob-14 { width: 180px; height: 180px; }
 }
 
 /* =========================================
@@ -1323,6 +1706,23 @@ body {
     .about-us-title { font-size: 32px; }
     .about-us-desc { font-size: 15px; }
     .btn-about { font-size: 17px; padding: 15px 28px; }
+
+    .section-testimoni { padding: 80px 80px 100px 80px; }
+    .testimoni-badge { font-size: 26px; margin-bottom: 15px; }
+    .testimoni-title { font-size: 38px; max-width: 750px; margin-bottom: 3px; }
+    .testimoni-desc { font-size: 17px; max-width: 650px; }
+    .testimoni-list { gap: 25px; }
+
+    /* Section Question */
+    .section-question { padding: 100px 80px; }
+    .question-badge { font-size: 18px; padding: 6px 26px; margin-bottom: 20px; }
+    .question-title { font-size: 42px; margin-bottom: 16px; }
+    .question-desc { font-size: 17px; max-width: 550px; margin-bottom: 28px; }
+    .btn-question { font-size: 22px; padding: 15px 42px; }
+
+    .blob-12 { width: 140px; height: 140px; }
+    .blob-13 { width: 180px; height: 180px; }
+    .blob-14 { width: 110px; height: 110px; }
 }
 
 /* =========================================
@@ -1459,9 +1859,7 @@ body {
     .product-details li { font-size: 13px; }
     .btn-order { height: 46px; font-size: 20px; }
 
-    /* =========================================
-       SECTION ABOUT MOBILE — REVISI FINAL
-       ========================================= */
+    /* SECTION ABOUT MOBILE */
     .about-why {
         padding: 0 0 60px 0;
         background-color: #FFFFFF;
@@ -1473,7 +1871,6 @@ body {
         width: 100%;
     }
 
-    /* FRAME KOSONG */
     .about-why-frame {
         width: 100%;
         display: flex;
@@ -1482,15 +1879,14 @@ body {
         position: relative;
     }
 
-    /* WAVE DI ATAS — full width */
     .about-why-wave {
         display: block;
         position: relative;
         width: 100%;
-        height: 40px;
+        height: 120px;
         overflow: hidden;
         background-color: #FFFFFF;
-        margin-bottom: -1px;
+        margin-top: -1px;
         z-index: 5;
     }
 
@@ -1499,20 +1895,31 @@ body {
         bottom: 0;
         left: 0;
         width: 200%;
-        height: 40px;
+        height: 120px;
     }
 
     .about-wave-path {
-        animation: aboutWaveMove 6s linear infinite;
         transform-origin: center;
     }
 
-    @keyframes aboutWaveMove {
+    .about-wave-back {
+        animation: aboutWaveBack 8s linear infinite;
+    }
+
+    .about-wave-front {
+        animation: aboutWaveFront 6s linear infinite;
+    }
+
+    @keyframes aboutWaveBack {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
     }
 
-    /* SETENGAH LINGKARAN — full width, rasio 2:1 */
+    @keyframes aboutWaveFront {
+        0% { transform: translateX(-50%); }
+        100% { transform: translateX(0); }
+    }
+
     .about-why-arch {
         width: 100%;
         height: 340px;
@@ -1538,7 +1945,6 @@ body {
     .about-why-title { font-size: 22px; max-width: 100%; margin-bottom: 8px; line-height: 1.15; }
     .about-why-desc { font-size: 13px; max-width: 100%; line-height: 1.4; }
 
-    /* 3 LINGKARAN VERTIKAL — overlap ke dome */
     .about-why-circles {
         position: relative;
         bottom: auto;
@@ -1594,11 +2000,67 @@ body {
     .about-us-desc { font-size: 14px; text-align: center; }
     .btn-about { font-size: 16px; padding: 14px 25px; align-self: center; text-align: center; line-height: 1.3; }
 
+    .wave-divider-about-testi {
+        height: 120px;
+        transform: none;
+    }
+    .wave-about-testi {
+        height: 120px;
+    }
+
+    /* SECTION TESTIMONI MOBILE */
+    .section-testimoni { padding: 60px 20px 80px 20px; }
+    .testimoni-header { margin-bottom: 40px; }
+    .testimoni-badge { font-size: 18px; margin-bottom: 10px; padding: 4px 20px; }
+    .testimoni-title { font-size: 28px; max-width: 100%; margin-bottom: 3px; }
+    .testimoni-desc { font-size: 14px; max-width: 100%; }
+
+    .testimoni-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        max-width: 100%;
+    }
+
+    .testimoni-card {
+        aspect-ratio: 3 / 4;
+        border-radius: 12px;
+    }
+
+    /* SECTION QUESTION MOBILE */
+    .section-question { padding: 70px 20px; }
+    .question-badge { font-size: 15px; padding: 6px 22px; margin-bottom: 16px; }
+    .question-title { font-size: 28px; margin-bottom: 14px; }
+    .question-desc { font-size: 14px; max-width: 100%; margin-bottom: 24px; }
+    .btn-question { font-size: 18px; padding: 14px 32px; }
+
+    .blob-12 { width: 100px; height: 100px; top: 3%; right: 5%; }
+    .blob-13 { width: 120px; height: 120px; bottom: 5%; left: 2%; }
+    .blob-14 { width: 80px; height: 80px; }
+
+    .lightbox-close {
+        width: 45px;
+        height: 45px;
+        top: 20px;
+        right: 20px;
+    }
+
+    .lightbox-img {
+        max-width: 95%;
+        max-height: 85vh;
+    }
+
+    /* BLOB MOBILE */
     .blob-1 { width: 100px; height: 100px; top: 3%; right: 5%; }
     .blob-2 { width: 120px; height: 120px; bottom: 5%; left: 2%; }
     .blob-3 { width: 80px; height: 80px; }
     .blob-4 { width: 100px; height: 100px; }
     .blob-5 { width: 130px; height: 130px; }
+    .blob-6 { width: 100px; height: 100px; left: -30px; }
+    .blob-7 { width: 90px; height: 90px; right: -25px; }
+    .blob-8 { width: 110px; height: 110px; left: -30px; }
+    .blob-9 { width: 80px; height: 80px; right: -20px; }
+    .blob-10 { width: 100px; height: 100px; left: -30px; }
+    .blob-11 { width: 90px; height: 90px; right: -30px; }
 }
 
 @media (max-width: 730px) {
@@ -1646,11 +2108,36 @@ body {
     .btn-about { font-size: 14px; padding: 12px 20px; }
     .gallery-item { height: 260px; }
 
+    /* Testimoni Mobile */
+    .section-testimoni { padding: 50px 15px 70px 15px; }
+    .testimoni-badge { font-size: 16px; margin-bottom: 8px; padding: 4px 18px; }
+    .testimoni-title { font-size: 24px; }
+    .testimoni-desc { font-size: 13px; }
+    .testimoni-list { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+    /* Question Mobile */
+    .section-question { padding: 60px 15px; }
+    .question-badge { font-size: 14px; padding: 5px 20px; margin-bottom: 14px; }
+    .question-title { font-size: 24px; margin-bottom: 12px; }
+    .question-desc { font-size: 13px; margin-bottom: 22px; }
+    .btn-question { font-size: 16px; padding: 12px 28px; }
+
+    .blob-12 { width: 80px; height: 80px; }
+    .blob-13 { width: 100px; height: 100px; }
+    .blob-14 { width: 60px; height: 60px; }
+
+    /* Blob Mobile */
     .blob-1 { width: 80px; height: 80px; }
     .blob-2 { width: 100px; height: 100px; }
     .blob-3 { width: 60px; height: 60px; }
     .blob-4 { width: 80px; height: 80px; }
     .blob-5 { width: 100px; height: 100px; }
+    .blob-6 { width: 80px; height: 80px; }
+    .blob-7 { width: 70px; height: 70px; }
+    .blob-8 { width: 90px; height: 90px; }
+    .blob-9 { width: 65px; height: 65px; }
+    .blob-10 { width: 80px; height: 80px; }
+    .blob-11 { width: 70px; height: 70px; }
 }
 
 @media (max-width: 480px) {
@@ -1700,11 +2187,36 @@ body {
     .btn-about { font-size: 12px; padding: 10px 18px; }
     .gallery-item { height: 220px; }
 
+    /* Testimoni Mobile Kecil */
+    .section-testimoni { padding: 40px 12px 60px 12px; }
+    .testimoni-badge { font-size: 14px; padding: 3px 15px; }
+    .testimoni-title { font-size: 20px; }
+    .testimoni-desc { font-size: 12px; }
+    .testimoni-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+    /* Question Mobile Kecil */
+    .section-question { padding: 50px 12px; }
+    .question-badge { font-size: 12px; padding: 4px 16px; margin-bottom: 12px; }
+    .question-title { font-size: 20px; margin-bottom: 10px; }
+    .question-desc { font-size: 12px; margin-bottom: 20px; }
+    .btn-question { font-size: 14px; padding: 10px 24px; }
+
+    .blob-12 { width: 60px; height: 60px; }
+    .blob-13 { width: 80px; height: 80px; }
+    .blob-14 { display: none; }
+
+    /* Blob Mobile Kecil */
     .blob-1 { width: 60px; height: 60px; }
     .blob-2 { width: 80px; height: 80px; }
     .blob-3 { display: none; }
     .blob-4 { width: 60px; height: 60px; }
     .blob-5 { width: 80px; height: 80px; }
+    .blob-6 { width: 60px; height: 60px; }
+    .blob-7 { width: 55px; height: 55px; }
+    .blob-8 { width: 70px; height: 70px; }
+    .blob-9 { width: 50px; height: 50px; }
+    .blob-10 { width: 60px; height: 60px; }
+    .blob-11 { width: 55px; height: 55px; }
 }
 
 @media (max-width: 360px) {
@@ -1756,8 +2268,31 @@ body {
     .btn-about { font-size: 11px; padding: 10px 15px; }
     .gallery-item { height: 200px; }
 
+    /* Testimoni Paling Kecil */
+    .testimoni-badge { font-size: 12px; padding: 3px 12px; }
+    .testimoni-title { font-size: 18px; }
+    .testimoni-desc { font-size: 11px; }
+    .testimoni-list { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+
+    /* Question Paling Kecil */
+    .section-question { padding: 45px 10px; }
+    .question-badge { font-size: 11px; padding: 3px 14px; }
+    .question-title { font-size: 18px; }
+    .question-desc { font-size: 11px; }
+    .btn-question { font-size: 13px; padding: 10px 22px; }
+
+    .blob-12 { width: 50px; height: 50px; }
+    .blob-13 { width: 60px; height: 60px; }
+
+    /* Blob Paling Kecil */
     .blob-1 { width: 50px; height: 50px; }
     .blob-2 { width: 60px; height: 60px; }
     .blob-4 { width: 50px; height: 50px; }
     .blob-5 { width: 70px; height: 70px; }
+    .blob-6 { width: 50px; height: 50px; }
+    .blob-7 { width: 45px; height: 45px; }
+    .blob-8 { width: 60px; height: 60px; }
+    .blob-9 { width: 40px; height: 40px; }
+    .blob-10 { width: 50px; height: 50px; }
+    .blob-11 { width: 45px; height: 45px; }
 }
