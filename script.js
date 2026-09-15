@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 🔥 GANTI NOMOR WHATSAPP KAMU DI SINI
     // Format: kode negara + nomor, TANPA "+", TANPA "0", TANPA spasi
     // ==========================================================
-    const WA_NUMBER = "6287778560980"; // ← GANTI DI SINI
+    const WA_NUMBER = "6287778560980";
 
     console.log('✅ Script loaded');
 
     // =========================================
-    // 1. NAVBAR (Smooth Scroll + Active State)
+    // 1. NAVBAR
     // =========================================
     const navbar = document.querySelector('.navbar-container');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -575,7 +575,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderMultiList([{ product: '', size: '', qty: 1 }]);
         updateTotal();
 
-        // Reset address UI
         const wrapper = document.querySelector('.address-input-wrapper');
         if (wrapper) wrapper.classList.remove('valid', 'invalid', 'loading');
         const hint = document.getElementById('addressHint');
@@ -733,31 +732,74 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================
-    // VALIDASI ALAMAT
+    // VALIDASI ALAMAT (PER-KOMPONEN)
     // =========================================
     function validateAddress(address) {
-        if (!address) return { valid: false, message: 'Mohon isi Alamat Lengkap terlebih dahulu.' };
-        if (address.length < 15) return { valid: false, message: 'Alamat terlalu pendek. Minimal 15 karakter.' };
+        const missing = [];
 
-        const words = address.split(/\s+/).filter(w => w.length > 0);
-        if (words.length < 3) return { valid: false, message: 'Alamat minimal 3 kata. Contoh: "Jl. Merdeka No. 10".' };
+        if (!address) {
+            return { valid: false, message: 'Mohon isi Alamat Lengkap terlebih dahulu.', missing: ['semua'] };
+        }
 
-        if (!/[a-zA-Z]/.test(address)) return { valid: false, message: 'Alamat harus mengandung huruf.' };
+        if (address.length < 20) {
+            return { valid: false, message: 'Alamat terlalu pendek. Minimal 20 karakter.', missing: ['alamat lengkap'] };
+        }
+
+        if (!/[a-zA-Z]/.test(address)) {
+            return { valid: false, message: 'Alamat harus mengandung huruf.', missing: ['huruf'] };
+        }
 
         const allowedPattern = /^[a-zA-Z0-9\s.,\-\/()#:']+$/;
-        if (!allowedPattern.test(address)) return { valid: false, message: 'Alamat mengandung karakter tidak valid.' };
+        if (!allowedPattern.test(address)) {
+            return { valid: false, message: 'Alamat mengandung karakter tidak valid.', missing: ['karakter valid'] };
+        }
 
-        const hasNumber = /\d/.test(address);
-        const hasKeyword = /\b(jl|jalan|gang|gg|rt|rw|no|nomor|blok|perum|perumahan|kel|kelurahan|kec|kecamatan|kota|kab|kabupaten|desa|dusun|komplek|apartemen|apartment|tower|unit|ruko|lantai|lt)\b/i.test(address);
+        // Anti spam
+        if (/(.)\1{4,}/.test(address)) {
+            return { valid: false, message: 'Alamat terdeteksi tidak valid.', missing: ['alamat asli'] };
+        }
 
-        if (!hasNumber && !hasKeyword) return { valid: false, message: 'Sertakan nomor/blok atau keterangan Jl./Gang/No./RT/RW.' };
-
-        if (/(.)\1{4,}/.test(address)) return { valid: false, message: 'Alamat terdeteksi tidak valid.' };
-
-        const spamPatterns = [/asdf/i, /qwer/i, /zxcv/i, /1234/i, /test/i, /aaaa/i, /xxxx/i, /haha/i, /hehe/i, /baba/i];
+        const spamPatterns = [/asdf/i, /qwer/i, /zxcv/i, /1234/i, /testtest/i, /aaaa/i, /xxxx/i, /haha/i, /hehe/i, /baba/i];
         const lowerAddr = address.toLowerCase();
         for (const pattern of spamPatterns) {
-            if (pattern.test(lowerAddr)) return { valid: false, message: 'Alamat terdeteksi tidak valid.' };
+            if (pattern.test(lowerAddr)) {
+                return { valid: false, message: 'Alamat terdeteksi tidak valid.', missing: ['alamat asli'] };
+            }
+        }
+
+        // ===== CEK KOMPONEN =====
+        const addr = address.toLowerCase();
+
+        // 1. Cek nama jalan
+        const hasStreet = /\b(jl|jalan|gang|gg|blok|komplek|perum|perumahan|apartemen|apartment|tower|ruko)\b/i.test(address);
+        if (!hasStreet) missing.push('nama jalan (Jl./Gang/Blok)');
+
+        // 2. Cek nomor rumah (angka setelah No. atau angka berdiri sendiri)
+        const hasHouseNumber = /\b(no|nomor)\s*\.?\s*\d+[a-z]?\b/i.test(address) || /\b\d+[a-z]?\b/i.test(address);
+        if (!hasHouseNumber) missing.push('nomor rumah (No. XX)');
+
+        // 3. Cek RT/RW
+        const hasRT = /\brt\s*\.?\s*\d+/i.test(address) || /\brt\s*\d+/i.test(address);
+        const hasRW = /\brw\s*\.?\s*\d+/i.test(address) || /\brw\s*\d+/i.test(address);
+        if (!hasRT) missing.push('RT');
+        if (!hasRW) missing.push('RW');
+
+        // 4. Cek kelurahan/kecamatan/kota
+        const hasKel = /\b(kel|kelurahan|desa|dusun)\b/i.test(address);
+        const hasKec = /\b(kec|kecamatan)\b/i.test(address);
+        const hasKota = /\b(kota|kab|kabupaten|kotamadya)\b/i.test(address);
+
+        // Minimal salah satu dari kel/kec/kota ada. Kalau gak ada semua, minta Kota
+        if (!hasKel && !hasKec && !hasKota) {
+            missing.push('kelurahan/kecamatan/kota');
+        }
+
+        if (missing.length > 0) {
+            return {
+                valid: false,
+                message: 'Alamat belum lengkap. Masih kurang: ' + missing.join(', ') + '.',
+                missing: missing
+            };
         }
 
         return { valid: true };
@@ -777,7 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (status === 'valid') {
             addressWrapper.classList.add('valid');
             addressHint.className = 'address-hint valid';
-            addressHint.textContent = '✓ ' + (message || 'Alamat valid');
+            addressHint.textContent = '✓ ' + (message || 'Alamat valid & lengkap');
         } else if (status === 'invalid') {
             addressWrapper.classList.add('invalid');
             addressHint.className = 'address-hint invalid';
@@ -796,10 +838,10 @@ document.addEventListener('DOMContentLoaded', () => {
         orderAddress.addEventListener('input', () => {
             const val = orderAddress.value.trim();
             if (val.length === 0) return updateAddressUI('neutral', '');
-            if (val.length < 5) return updateAddressUI('neutral', 'Lanjutkan mengetik alamat...');
+            if (val.length < 10) return updateAddressUI('neutral', 'Lanjutkan mengetik alamat lengkap...');
 
             const result = validateAddress(val);
-            if (result.valid) updateAddressUI('valid', 'Alamat valid');
+            if (result.valid) updateAddressUI('valid', 'Alamat valid & lengkap');
             else updateAddressUI('invalid', result.message);
         });
     }
@@ -832,13 +874,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (data && data.display_name) {
                             const addr = data.address || {};
                             let parts = [];
+
                             if (addr.road) parts.push(addr.road);
                             if (addr.house_number) parts.push('No. ' + addr.house_number);
                             if (addr.neighbourhood || addr.suburb) parts.push(addr.neighbourhood || addr.suburb);
-                            if (addr.village || addr.city_district) parts.push(addr.village || addr.city_district);
+                            if (addr.village || addr.city_district) parts.push('Kel. ' + (addr.village || addr.city_district));
                             if (addr.city || addr.town) parts.push(addr.city || addr.town);
                             if (addr.state) parts.push(addr.state);
-                            if (addr.postcode) parts.push(addr.postcode);
 
                             const fullAddress = parts.length > 0 ? parts.join(', ') : data.display_name;
                             orderAddress.value = fullAddress;
@@ -848,9 +890,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (validation.valid) {
                                 updateAddressUI('valid', 'Lokasi GPS berhasil diisi & valid');
                             } else {
-                                updateAddressUI('invalid', 'Lokasi ditemukan. Mohon lengkapi alamat (nomor rumah, RT/RW, patokan).');
+                                updateAddressUI('invalid', 'Lokasi ditemukan. Mohon lengkapi: ' + (validation.missing || []).join(', '));
                             }
-                            showAlert('Lokasi berhasil ditemukan! Mohon periksa dan lengkapi alamat jika perlu.', 'GPS Berhasil', 'success');
+                            showAlert('Lokasi berhasil ditemukan! Mohon periksa & lengkapi alamat (nomor rumah, RT/RW).', 'GPS Berhasil', 'success');
                         } else {
                             throw new Error('Alamat tidak ditemukan');
                         }
@@ -954,19 +996,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const message =
-`Halo Beecalicious, saya mau pesan Bika Ambon!
+`Halo Beecalicious!
 
 Saya ingin memesan:
-
-${listText}
+━━━━━━━━━━━━━━━━━━
+${listText}━━━━━━━━━━━━━━━━━━
 TOTAL     : ${formatRupiah(total)}
-
+━━━━━━━━━━━━━━━━━━
 Nama      : ${name}
 Alamat    : ${address}
 Catatan   : ${note || '-'}
+━━━━━━━━━━━━━━━━━━
 
-
-boleh bantu totalkan harga kue dan ongkirnya? Terima kasih`;
+Mohon konfirmasi ketersediaan stok, total harga, dan estimasi pengiriman ya. Terima kasih! 🙏`;
 
             const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
             window.open(url, '_blank');
@@ -977,4 +1019,4 @@ boleh bantu totalkan harga kue dan ongkirnya? Terima kasih`;
         });
     }
 
-});
+}); 

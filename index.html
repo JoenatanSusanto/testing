@@ -599,7 +599,12 @@
                             </svg>
                         </span>
 
-                        <textarea id="orderAddress" name="address" rows="2" placeholder="Contoh: Jl. Merdeka No. 10, RT 02/RW 05, Kel. Menteng, Jakarta Pusat" required></textarea>
+                        <textarea 
+                            id="orderAddress" 
+                            name="address" 
+                            rows="3" 
+                            placeholder="Contoh: Jl. Merdeka No. 10A, RT 001/RW 005, Kel. Menteng, Kec. Menteng, Jakarta Pusat"
+                            required></textarea>
 
                         <button type="button" class="address-gps-btn" id="addressGpsBtn" aria-label="Ambil lokasi dari GPS" title="Ambil lokasi dari GPS">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -609,6 +614,14 @@
                             </svg>
                         </button>
                     </div>
+                    
+                    <!-- HINT FORMAT (selalu tampil) -->
+                    <div class="address-format-hint" id="addressFormatHint">
+                        <span class="format-label">💡 Format:</span>
+                        <span class="format-text">Jl. [nama] No. [no], RT [x]/RW [x], Kel. [nama], Kec. [nama], [Kota]</span>
+                    </div>
+                    
+                    <!-- HINT STATUS (dinamis) -->
                     <p class="address-hint" id="addressHint"></p>
                 </div>
 
@@ -627,9 +640,7 @@
         </div>
     </div>
 
-    <!-- =========================================
-         CUSTOM ALERT POPUP
-         ========================================= -->
+    <!-- CUSTOM ALERT POPUP -->
     <div class="custom-alert" id="customAlert">
         <div class="custom-alert-overlay" id="customAlertOverlay"></div>
         <div class="custom-alert-box">
