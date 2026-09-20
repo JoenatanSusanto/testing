@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================================
-    // 🔥 GANTI NOMOR WHATSAPP KAMU DI SINI
-    // Format: kode negara + nomor, TANPA "+", TANPA "0", TANPA spasi
+    // 🔥 NOMOR WHATSAPP BEEKALICIOUS
     // ==========================================================
-    const WA_NUMBER = "6287778560980";
+    const WA_NUMBER = "6281260004252";
 
-    console.log('✅ Script loaded');
+    console.log('✅ Script loaded — Beecalicious');
 
     // =========================================
     // 1. NAVBAR
@@ -169,6 +168,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateRatingName() {
         if (ratingName) ratingName.textContent = menuNames[activeIndex] || 'ORIGINAL';
+
+        const ratingBestSeller = document.getElementById('ratingBestSeller');
+        if (ratingBestSeller) {
+            if (activeIndex === 1) {
+                ratingBestSeller.classList.add('visible');
+            } else {
+                ratingBestSeller.classList.remove('visible');
+            }
+        }
+
+        const menuLabelFire = document.getElementById('menuLabelFire');
+        if (menuLabelFire) {
+            if (activeIndex === 1) {
+                menuLabelFire.classList.add('visible');
+            } else {
+                menuLabelFire.classList.remove('visible');
+            }
+        }
     }
 
     function scheduleShowRating() {
@@ -355,6 +372,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const ratingBoxes = document.querySelectorAll('.rating-stars-box');
     ratingBoxes.forEach(box => {
         renderRatingStars(box);
+    });
+
+    // =========================================
+    // 5b. SIZE SELECTOR — Ganti gambar produk
+    // =========================================
+    const sizePills = document.querySelectorAll('.size-pill');
+    const productImgs = document.querySelectorAll('.product-image img');
+    const FADE_DURATION = 300; // ms
+
+    let currentSize = 'd18';
+
+    sizePills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            const newSize = pill.dataset.size;
+            if (newSize === currentSize) return;
+
+            // Update active state
+            sizePills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+
+            // Fade out semua gambar
+            productImgs.forEach(img => {
+                img.style.transition = `opacity ${FADE_DURATION}ms ease`;
+                img.style.opacity = '0';
+            });
+
+            // Setelah fade out, ganti src lalu fade in
+            setTimeout(() => {
+                productImgs.forEach(img => {
+                    const newSrc = img.getAttribute(`data-img-${newSize}`);
+                    if (newSrc) img.src = newSrc;
+                });
+
+                // Fade in
+                requestAnimationFrame(() => {
+                    productImgs.forEach(img => {
+                        img.style.opacity = '1';
+                    });
+                });
+
+                currentSize = newSize;
+            }, FADE_DURATION);
+        });
     });
 
     // =========================================
@@ -552,17 +612,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderAddress = document.getElementById('orderAddress');
     const orderNote = document.getElementById('orderNote');
 
+    // =========================================
+    // PRODUK & UKURAN BEEKALICIOUS
+    // =========================================
     const PRODUCTS = [
-        { value: 'Bika Ambon Original',      label: 'Bika Ambon Original' },
-        { value: 'Bika Ambon Pandan',        label: 'Bika Ambon Pandan' },
-        { value: 'Bika Ambon Topping Keju',  label: 'Bika Ambon Topping Keju' }
+        { value: 'Bika Ambon Original',  label: 'Bika Ambon Original' },
+        { value: 'Bika Ambon Pandan',    label: 'Bika Ambon Pandan' },
+        { value: 'Bika Ambon Keju',      label: 'Bika Ambon Keju' }
     ];
 
     const SIZES = [
-        { value: 'Ukuran bulat (diameter 10–11 cm)', price: 35000,  label: 'Bulat 10–11 cm' },
-        { value: 'Ukuran 10-20 cm',                  price: 70000,  label: '10-20 cm' },
-        { value: 'Ukuran 20-20 cm',                  price: 135000, label: '20-20 cm' }
+        { value: 'Diameter 18 cm', label: 'Diameter 18 cm' },
+        { value: 'Ukuran 20x10',   label: 'Ukuran 20x10' },
+        { value: 'Ukuran 20x20',   label: 'Ukuran 20x20' }
     ];
+
+    const PRICE_LIST = {
+        'Bika Ambon Original': {
+            'Diameter 18 cm': 60000,
+            'Ukuran 20x10':   70000,
+            'Ukuran 20x20':   140000
+        },
+        'Bika Ambon Pandan': {
+            'Diameter 18 cm': 62500,
+            'Ukuran 20x10':   72500,
+            'Ukuran 20x20':   145000
+        },
+        'Bika Ambon Keju': {
+            'Diameter 18 cm': 65000,
+            'Ukuran 20x10':   75000,
+            'Ukuran 20x20':   150000
+        }
+    };
+
+    function getPrice(productName, sizeName) {
+        if (PRICE_LIST[productName] && PRICE_LIST[productName][sizeName]) {
+            return PRICE_LIST[productName][sizeName];
+        }
+        return 0;
+    }
 
     function formatRupiah(num) {
         return 'Rp' + num.toLocaleString('id-ID');
@@ -614,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function buildSizeOptions(selectedValue = '') {
         let html = `<option value="">-- Pilih Ukuran --</option>`;
         SIZES.forEach(s => {
-            html += `<option value="${s.value}" data-price="${s.price}" ${s.value === selectedValue ? 'selected' : ''}>${s.label} — ${formatRupiah(s.price)}</option>`;
+            html += `<option value="${s.value}" ${s.value === selectedValue ? 'selected' : ''}>${s.label}</option>`;
         });
         return html;
     }
@@ -721,18 +809,22 @@ document.addEventListener('DOMContentLoaded', () => {
         let total = 0;
         const items = orderMultiList.querySelectorAll('.order-multi-item');
         items.forEach(item => {
+            const productSelect = item.querySelector('.multi-product');
             const sizeSelect = item.querySelector('.multi-size');
             const qtyInput = item.querySelector('.multi-qty');
-            const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
-            const price = selectedOption ? parseInt(selectedOption.dataset.price || 0) : 0;
+
+            const productValue = productSelect.value;
+            const sizeValue = sizeSelect.value;
             const qty = parseInt(qtyInput.value) || 0;
+
+            const price = getPrice(productValue, sizeValue);
             total += price * qty;
         });
         orderTotalValue.textContent = formatRupiah(total);
     }
 
     // =========================================
-    // VALIDASI ALAMAT (PER-KOMPONEN)
+    // VALIDASI ALAMAT
     // =========================================
     function validateAddress(address) {
         const missing = [];
@@ -754,7 +846,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return { valid: false, message: 'Alamat mengandung karakter tidak valid.', missing: ['karakter valid'] };
         }
 
-        // Anti spam
         if (/(.)\1{4,}/.test(address)) {
             return { valid: false, message: 'Alamat terdeteksi tidak valid.', missing: ['alamat asli'] };
         }
@@ -767,29 +858,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // ===== CEK KOMPONEN =====
-        const addr = address.toLowerCase();
-
-        // 1. Cek nama jalan
         const hasStreet = /\b(jl|jalan|gang|gg|blok|komplek|perum|perumahan|apartemen|apartment|tower|ruko)\b/i.test(address);
         if (!hasStreet) missing.push('nama jalan (Jl./Gang/Blok)');
 
-        // 2. Cek nomor rumah (angka setelah No. atau angka berdiri sendiri)
         const hasHouseNumber = /\b(no|nomor)\s*\.?\s*\d+[a-z]?\b/i.test(address) || /\b\d+[a-z]?\b/i.test(address);
         if (!hasHouseNumber) missing.push('nomor rumah (No. XX)');
 
-        // 3. Cek RT/RW
         const hasRT = /\brt\s*\.?\s*\d+/i.test(address) || /\brt\s*\d+/i.test(address);
         const hasRW = /\brw\s*\.?\s*\d+/i.test(address) || /\brw\s*\d+/i.test(address);
         if (!hasRT) missing.push('RT');
         if (!hasRW) missing.push('RW');
 
-        // 4. Cek kelurahan/kecamatan/kota
         const hasKel = /\b(kel|kelurahan|desa|dusun)\b/i.test(address);
         const hasKec = /\b(kec|kecamatan)\b/i.test(address);
         const hasKota = /\b(kota|kab|kabupaten|kotamadya)\b/i.test(address);
 
-        // Minimal salah satu dari kel/kec/kota ada. Kalau gak ada semua, minta Kota
         if (!hasKel && !hasKec && !hasKota) {
             missing.push('kelurahan/kecamatan/kota');
         }
@@ -968,11 +1051,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let valid = true;
 
             items.forEach((item, index) => {
-                const product = item.querySelector('.multi-product').value;
+                const productSelect = item.querySelector('.multi-product');
+                const product = productSelect.value;
                 const sizeSelect = item.querySelector('.multi-size');
                 const sizeValue = sizeSelect.value;
-                const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
-                const price = selectedOption ? parseInt(selectedOption.dataset.price || 0) : 0;
                 const qty = parseInt(item.querySelector('.multi-qty').value) || 0;
 
                 if (!product || !sizeValue || qty < 1) {
@@ -980,6 +1062,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
+                const price = getPrice(product, sizeValue);
                 const subtotal = price * qty;
                 total += subtotal;
 
@@ -996,19 +1079,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const message =
-`Halo Beecalicious!
+`Halo Beecalicious, saya mau pesan Bika Ambon!
 
 Saya ingin memesan:
-━━━━━━━━━━━━━━━━━━
-${listText}━━━━━━━━━━━━━━━━━━
-TOTAL     : ${formatRupiah(total)}
-━━━━━━━━━━━━━━━━━━
+
+${listText}
+TOTAL     : ${formatRupiah(total)} (*belum termasuk ongkir)
+
 Nama      : ${name}
 Alamat    : ${address}
 Catatan   : ${note || '-'}
-━━━━━━━━━━━━━━━━━━
 
-Mohon konfirmasi ketersediaan stok, total harga, dan estimasi pengiriman ya. Terima kasih! 🙏`;
+
+boleh bantu totalkan harga kue + ongkirnya? Terima kasih`;
 
             const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
             window.open(url, '_blank');
@@ -1019,4 +1102,4 @@ Mohon konfirmasi ketersediaan stok, total harga, dan estimasi pengiriman ya. Ter
         });
     }
 
-}); 
+});
